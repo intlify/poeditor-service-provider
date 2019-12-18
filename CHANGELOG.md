@@ -1,4 +1,13 @@
 
+## v0.1.1 (2019-12-18)
+
+#### :zap: Improvement Features
+* [#13](https://github.com/kazupon/poeditor-service-provider/pull/13) fix unneccesary log ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.1.0 (2019-12-18)
 
 #### :star: Features
