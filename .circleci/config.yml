@@ -46,6 +46,8 @@ jobs:
       - run:
           name: Run Tests
           command: yarn test
+      - codecov/upload:
+        file: ./coverage/lcov.info
 
   release_if_needed:
     <<: *defaults
@@ -63,8 +65,6 @@ workflows:
   ci:
     jobs:
       - test
-      - codecov/upload:
-        file: ./coverage/lcov.info
       #- release_if_needed:
       #    requires:
       #      - test
