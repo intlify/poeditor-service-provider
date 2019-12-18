@@ -1,0 +1,44 @@
+{
+  "name": "poeditor-service-provider",
+  "description": "POEditor for vue-i18n-locale-message service provider",
+  "version": "0.0.0",
+  "author": {
+    "name": "kazuya kawaguchi",
+    "email": "kawakazu80@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/kazupon/poeditor-service-provider/issues"
+  },
+  "devDependencies": {
+    "lerna-changelog": "^1.0.0",
+    "shipjs": "0.11.3"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "files": [
+    "index.js"
+  ],
+  "homepage": "https://github.com/kazupon/poeditor-service-provider#readme",
+  "keywords": [
+    "l10n",
+    "localization",
+    "pooeditor",
+    "vue-i18n",
+    "vue-i18n-locale-message"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kazupon/poeditor-service-provider.git"
+  },
+  "scripts": {
+    "build": "echo \"build!\"",
+    "lint": "echo \"lint!\"",
+    "release:prepare": "shipjs prepare",
+    "release:trigger": "shipjs trigger",
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "echo \"unit tests!\""
+  }
+}
