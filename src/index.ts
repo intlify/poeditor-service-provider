@@ -53,7 +53,7 @@ const factory = (configration: ProviderConfiguration<POEditorProviderConfigurati
         const results = []
         const files = resouroce.files || []
         for (const file of files) {
-          console.log(`upload '${file.path}' file with '${file.locale}' locale`, dryRun)
+          console.log(`upload '${file.path}' file with '${file.locale}' locale`)
           if (!dryRun) {
             const ret = await upload(file, { token, id })
             debug(`upload file '${file.path}' result`, ret)

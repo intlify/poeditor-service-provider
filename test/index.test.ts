@@ -53,9 +53,9 @@ test('API call', async () => {
     }]
   }, false)
 
-  expect(spyLog).toHaveBeenNthCalledWith(1, `upload '${enResource}' file with 'en' locale`, false)
+  expect(spyLog).toHaveBeenNthCalledWith(1, `upload '${enResource}' file with 'en' locale`)
   expect(spyLog).toHaveBeenNthCalledWith(2, 'wait 30 sec due to limit Editor API call ...')
-  expect(spyLog).toHaveBeenNthCalledWith(3, `upload '${jaResource}' file with 'ja' locale`, false)
+  expect(spyLog).toHaveBeenNthCalledWith(3, `upload '${jaResource}' file with 'ja' locale`)
   expect(spyLog).toHaveBeenNthCalledWith(4, 'wait 30 sec due to limit Editor API call ...')
 })
 
@@ -77,5 +77,5 @@ test('dryRun mode', async () => {
   }, true)
 
   expect(spyLog).toHaveBeenNthCalledWith(1, 'dryRun mode ...')
-  expect(spyLog).toHaveBeenNthCalledWith(2, "upload '/path/to/project/src/locales/en.json' file with 'en' locale", true)
+  expect(spyLog).toHaveBeenNthCalledWith(2, "upload '/path/to/project/src/locales/en.json' file with 'en' locale")
 })
