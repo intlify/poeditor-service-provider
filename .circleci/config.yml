@@ -63,6 +63,8 @@ workflows:
   ci:
     jobs:
       - test
+      - codecov/upload:
+        file: ./coverage/lcov.info
       #- release_if_needed:
       #    requires:
       #      - test
