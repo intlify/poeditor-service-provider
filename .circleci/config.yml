@@ -31,7 +31,7 @@ defaults: &defaults
   docker:
     - image: circleci/node:10.17
 
-version: 2
+version: 2.1
 orbs:
   codecov: codecov/codecov@1.0.5
 jobs:
@@ -46,6 +46,8 @@ jobs:
       - run:
           name: Run Tests
           command: yarn test
+      - codecov/upload:
+        file: ./coverage/lcov.info
 
   release_if_needed:
     <<: *defaults
@@ -63,7 +65,7 @@ workflows:
   ci:
     jobs:
       - test
-      - release_if_needed:
-          requires:
-            - test
+      #- release_if_needed:
+      #    requires:
+      #      - test
 

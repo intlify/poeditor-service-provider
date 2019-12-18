@@ -9,15 +9,41 @@
   "bugs": {
     "url": "https://github.com/kazupon/poeditor-service-provider/issues"
   },
+  "changelog": {
+    "labels": {
+      "Type: Feature": ":star: Features",
+      "Type: Bug": ":bug: Bug Fixes",
+      "Type: Security": ":lock: Security Fixes",
+      "Type: Performance": ":chart_with_upwards_trend: Performance Fixes",
+      "Type: Improvement": ":zap: Improvement Features",
+      "Type: Breaking": ":boom: Breaking Change",
+      "Type: Deprecated": ":warning: Deprecated Features",
+      "Type: I18n": ":globe_with_meridians: Internationalization",
+      "Type: A11y": ":wheelchair: Accessibility",
+      "Type: Documentation": ":pencil: Documentation"
+    }
+  },
   "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.20",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "@typescript-eslint/typescript-estree": "^2.12.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue-libs": "^4.0.0",
+    "jest": "^24.9.0",
+    "jest-watch-typeahead": "^0.4.2",
     "lerna-changelog": "^1.0.0",
-    "shipjs": "0.11.3"
+    "opener": "^1.5.1",
+    "shipjs": "0.11.3",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.3"
   },
   "engines": {
     "node": ">= 10"
   },
   "files": [
-    "index.js"
+    "lib"
   ],
   "homepage": "https://github.com/kazupon/poeditor-service-provider#readme",
   "keywords": [
@@ -28,17 +54,22 @@
     "vue-i18n-locale-message"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kazupon/poeditor-service-provider.git"
   },
   "scripts": {
-    "build": "echo \"build!\"",
-    "lint": "echo \"lint!\"",
+    "build": "tsc -p .",
+    "clean": "rm -rf ./coverage && rm -rf ./lib/*.js*",
+    "coverage": "opener coverage/lcov-report/index.html",
+    "lint": "eslint ./src --ext .ts",
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",
-    "test": "npm run lint && npm run test:unit",
-    "test:unit": "echo \"unit tests!\""
+    "test": "npm run lint && npm run test:cover",
+    "test:cover": "npm run test:unit -- --coverage",
+    "test:unit": "jest --env node",
+    "test:watch": "jest --env node --watch",
+    "watch": "tsc -p . --watch"
   }
 }
