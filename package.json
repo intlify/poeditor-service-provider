@@ -10,7 +10,7 @@
     "url": "https://github.com/kazupon/poeditor-service-provider/issues"
   },
   "devDependencies": {
-    "lerna-changelog": "^1.0.0",
+    "lerna-changelog": "1.0.0",
     "shipjs": "0.11.3"
   },
   "engines": {
