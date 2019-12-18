@@ -11,7 +11,7 @@ import {
 import { POEditorProviderConfiguration } from '../types'
 
 import { debug as Debug } from 'debug'
-const debug = Debug('vue-i18n-locale-message:commands:test')
+const debug = Debug('poeditor-service-provider')
 
 const POEDITOR_API_BASE_URL = 'https://api.poeditor.com/v2'
 const POEDITOR_API_INTERVAL_LIMITATION = 30
