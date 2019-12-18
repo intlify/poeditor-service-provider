@@ -25,13 +25,14 @@
   },
   "devDependencies": {
     "lerna-changelog": "^1.0.0",
-    "shipjs": "0.11.3"
+    "shipjs": "0.11.3",
+    "typescript": "^3.7.3"
   },
   "engines": {
     "node": ">= 10"
   },
   "files": [
-    "index.js"
+    "lib"
   ],
   "homepage": "https://github.com/kazupon/poeditor-service-provider#readme",
   "keywords": [
@@ -42,13 +43,14 @@
     "vue-i18n-locale-message"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kazupon/poeditor-service-provider.git"
   },
   "scripts": {
-    "build": "echo \"build!\"",
+    "build": "tsc -p .",
+    "watch": "tsc -p . --watch",
     "lint": "echo \"lint!\"",
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",
