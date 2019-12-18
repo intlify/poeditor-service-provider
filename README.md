@@ -5,7 +5,7 @@
 
 POEditor service provider for [vue-i18n-locale-message](https://github.com/kazupon/vue-i18n-locale-message)
 
-## Usage :rocket:
+## :rocket: Usages
 
 ### Push locale messages to POEditor
 
