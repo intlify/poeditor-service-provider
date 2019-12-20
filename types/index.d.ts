@@ -15,3 +15,12 @@ export type POEditorProviderConfiguration = {
   id: string
   interval?: number
 }
+
+export type POEditorLocaleMessage = {
+  term: string
+  definition: string
+  context: string
+  term_plural: string
+  reference: string
+  comment: string
+}

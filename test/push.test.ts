@@ -33,6 +33,7 @@ test('API call', async () => {
   const axiosMock = axios as jest.Mocked<typeof axios>
   axiosMock.post.mockImplementation((url, data, config) => Promise.resolve({ data: {} }))
 
+  // run
   const conf: ProviderConfiguration<POEditorProviderConfiguration> = {
     provider: {
       token: 'xxx',
@@ -53,6 +54,7 @@ test('API call', async () => {
     }]
   }, false)
 
+  // verify
   expect(spyLog).toHaveBeenNthCalledWith(1, `upload '${enResource}' file with 'en' locale`)
   expect(spyLog).toHaveBeenNthCalledWith(2, 'wait 30 sec due to limit Editor API call ...')
   expect(spyLog).toHaveBeenNthCalledWith(3, `upload '${jaResource}' file with 'ja' locale`)
@@ -60,6 +62,7 @@ test('API call', async () => {
 })
 
 test('dryRun mode', async () => {
+  // run
   const conf: ProviderConfiguration<POEditorProviderConfiguration> = {
     provider: {
       token: 'xxx',
@@ -76,6 +79,7 @@ test('dryRun mode', async () => {
     }]
   }, true)
 
-  expect(spyLog).toHaveBeenNthCalledWith(1, 'dryRun mode ...')
+  // verify
+  expect(spyLog).toHaveBeenNthCalledWith(1, '----- POEditorServiceProvider push dryRun mode -----')
   expect(spyLog).toHaveBeenNthCalledWith(2, "upload '/path/to/project/src/locales/en.json' file with 'en' locale")
 })
