@@ -1,4 +1,13 @@
 
+## v0.2.0 (2019-12-20)
+
+#### :star: Features
+* [#18](https://github.com/kazupon/poeditor-service-provider/pull/18) pull locale message feature ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.1.1 (2019-12-18)
 
 #### :zap: Improvement Features
