@@ -11,8 +11,8 @@
  */
 
 export type POEditorProviderConfiguration = {
-  token: string
   id: string
+  token?: string
   interval?: number
 }
 

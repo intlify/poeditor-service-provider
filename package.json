@@ -63,7 +63,7 @@
     "vue-i18n-locale-message"
   ],
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "lib/factory.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kazupon/poeditor-service-provider.git"
