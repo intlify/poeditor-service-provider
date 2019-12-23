@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import qs from 'querystring'
 import FormData from 'form-data'
 import axios from 'axios'
+import { getToken } from './utils'
 
 import {
   Locale,
@@ -86,7 +87,7 @@ async function upload (fileInfo: ProviderPushFileInfo, config: POEditorProviderC
 
 const factory = (configration: ProviderConfiguration<POEditorProviderConfiguration>): Provider => {
   const id = configration.provider.id
-  const token = configration.provider.token
+  const token = getToken(configration.provider.token)
   const interval = configration.provider.interval || 30
   const { pushMode } = configration
   const delay = (sec: number) => new Promise(resolve => { setTimeout(resolve, sec * 1000) })

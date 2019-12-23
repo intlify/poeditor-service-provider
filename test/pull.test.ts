@@ -1,4 +1,3 @@
-import * as path from 'path'
 import factory from '../src/index'
 import { ProviderConfiguration } from 'vue-i18n-locale-message'
 import { POEditorProviderConfiguration } from '../types'
