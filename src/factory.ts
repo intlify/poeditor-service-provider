@@ -3,12 +3,9 @@ import provider from './provider'
 
 import {
   Provider,
-  ProviderConfiguration,
+  ProviderConfiguration
 } from 'vue-i18n-locale-message'
 import { POEditorProviderConfiguration } from '../types'
-
-import { debug as Debug } from 'debug'
-const debug = Debug('poeditor-service-provider:factory')
 
 const factory = (configration: ProviderConfiguration<POEditorProviderConfiguration>): Provider => {
   const id = configration.provider.id
