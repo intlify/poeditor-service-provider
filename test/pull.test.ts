@@ -57,7 +57,7 @@ test('specify locales', async () => {
     pushMode: 'file-path'
   }
   const provider = factory(conf)
-  const resource = await provider.pull(['en', 'ja'], false)
+  const resource = await provider.pull({ locales: ['en', 'ja'], dryRun: false })
 
   // verify
   expect(spyLog).toHaveBeenNthCalledWith(1, `fetch 'en' locale messages`)
@@ -110,7 +110,7 @@ test('not specify locales', async () => {
     pushMode: 'file-path'
   }
   const provider = factory(conf)
-  const resource = await provider.pull(['en', 'ja'], true)
+  const resource = await provider.pull({ locales: ['en', 'ja'], dryRun: true })
 
   // verify
   expect(spyLog).toHaveBeenNthCalledWith(1, '----- POEditorServiceProvider pull dryRun mode -----')
