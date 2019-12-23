@@ -6,7 +6,8 @@ import axios from 'axios'
 import {
   Locale,
   Provider,
-  ProviderPushResource,
+  PushArguments,
+  PullArguments,
   ProviderPullResource,
   ProviderPushFileInfo,
   ProviderConfiguration,
@@ -90,7 +91,8 @@ const factory = (configration: ProviderConfiguration<POEditorProviderConfigurati
   const { pushMode } = configration
   const delay = (sec: number) => new Promise(resolve => { setTimeout(resolve, sec * 1000) })
 
-  const push = async (resource: ProviderPushResource, dryRun: boolean): Promise<void> => {
+  const push = async (args: PushArguments): Promise<void> => {
+    const { resource, dryRun } = args
     return new Promise(async (resolve, reject) => {
       try {
         debug('provider#push:', resource, dryRun)
@@ -121,7 +123,8 @@ const factory = (configration: ProviderConfiguration<POEditorProviderConfigurati
     })
   }
 
-  const pull = async (locales: Locale[], dryRun: boolean): Promise<ProviderPullResource> => {
+  const pull = async (args: PullArguments): Promise<ProviderPullResource> => {
+    const { locales, dryRun } = args
     return new Promise(async (resolve, reject) => {
       dryRun && console.log(`----- POEditorServiceProvider pull dryRun mode -----`)
       const resource = {} as ProviderPullResource

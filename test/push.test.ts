@@ -44,15 +44,18 @@ test('API call', async () => {
   }
   const provider = factory(conf)
   await provider.push({
-    mode: conf.pushMode,
-    files: [{
-      locale: 'en',
-      path: path.resolve('./test/fixtures/en.json')
-    }, {
-      locale: 'ja',
-      path: path.resolve('./test/fixtures/ja.json')
-    }]
-  }, false)
+    resource: {
+      mode: conf.pushMode,
+      files: [{
+        locale: 'en',
+        path: path.resolve('./test/fixtures/en.json')
+      }, {
+        locale: 'ja',
+        path: path.resolve('./test/fixtures/ja.json')
+      }]
+    },
+    dryRun: false
+  })
 
   // verify
   expect(spyLog).toHaveBeenNthCalledWith(1, `upload '${enResource}' file with 'en' locale`)
@@ -72,12 +75,15 @@ test('dryRun mode', async () => {
   }
   const provider = factory(conf)
   await provider.push({
-    mode: conf.pushMode,
-    files: [{
-      locale: 'en',
-      path: '/path/to/project/src/locales/en.json'
-    }]
-  }, true)
+    resource: {
+      mode: conf.pushMode,
+      files: [{
+        locale: 'en',
+        path: '/path/to/project/src/locales/en.json'
+      }]
+    },
+    dryRun: true
+  })
 
   // verify
   expect(spyLog).toHaveBeenNthCalledWith(1, '----- POEditorServiceProvider push dryRun mode -----')
