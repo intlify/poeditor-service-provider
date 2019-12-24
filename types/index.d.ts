@@ -16,7 +16,7 @@ export type POEditorProviderConfiguration = {
   id: string
   /**
    *  API token.
-   *  if it's ommitted, use the value of `POEDITOR API TOKEN` ENV.
+   *  if it's ommitted, use the value of `POEDITOR_API_TOKEN` ENV.
    */
   token?: string
   /**
