@@ -1,4 +1,17 @@
 
+## v0.3.0 (2019-12-24)
+
+#### :star: Features
+* [#23](https://github.com/kazupon/poeditor-service-provider/pull/23) feat: support for API token from ENV ([@kazupon](https://github.com/kazupon))
+
+#### :zap: Improvement Features
+* [#24](https://github.com/kazupon/poeditor-service-provider/pull/24) Token omittion on the configuration ([@kazupon](https://github.com/kazupon))
+* [#22](https://github.com/kazupon/poeditor-service-provider/pull/22) update provider interface ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.2.0 (2019-12-20)
 
 #### :star: Features
