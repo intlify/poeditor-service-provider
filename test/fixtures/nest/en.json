@@ -1,0 +1,21 @@
+{
+  "App": {
+    "title": "Application",
+    "lang": "Change languages"
+  },
+  "components": {
+    "Modal": {
+      "ok": "OK",
+      "cancel": "Cancel"
+    },
+    "nest": {
+      "RankingTable": {
+        "headers": {
+          "rank": "Rank",
+          "name": "Name",
+          "score": "Score"
+        }
+      }
+    }
+  }
+}

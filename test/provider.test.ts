@@ -5,7 +5,6 @@ import provider from '../src/provider'
 // mocks
 jest.mock('../src/api')
 import * as api from '../src/api'
-import { POEditorLocaleMessage } from '../types'
 
 // --------------------
 // setup/teadown hooks
@@ -33,7 +32,7 @@ test('push method', async () => {
   apiMock.upload.mockImplementation((file, config) => Promise.resolve({ data: {} }))
 
   // run
-  const p = provider('12345', 'xxx', 'file-path', 1)
+  const p = provider('12345', 'xxx', 'file-path', 1, 2)
   await p.push({
     resource: {
       mode: 'file-path',
@@ -61,7 +60,7 @@ test('push method: dryRun mode', async () => {
   apiMock.upload.mockImplementation((file, config) => Promise.resolve({ data: {} }))
 
   // run
-  const p = provider('12345', 'xxx', 'file-path', 1)
+  const p = provider('12345', 'xxx', 'file-path', 1, 2)
   await p.push({
     resource: {
       mode: 'file-path',
@@ -99,7 +98,7 @@ test('pull method', async () => {
   }]))
 
   // run
-  const p = provider('12345', 'xxx', 'file-path', 1)
+  const p = provider('12345', 'xxx', 'file-path', 1, 2)
   const resource = await p.pull({ locales: ['en', 'ja'], dryRun: false })
   expect(spyLog).toHaveBeenNthCalledWith(1, `fetch 'en' locale messages`)
   expect(spyLog).toHaveBeenNthCalledWith(2, `fetch 'ja' locale messages`)
@@ -131,7 +130,7 @@ test('pull method: not specify locales', async () => {
   }]))
 
   // run
-  const p = provider('12345', 'xxx', 'file-path', 1)
+  const p = provider('12345', 'xxx', 'file-path', 1 ,2)
   const resource = await p.pull({ locales: [], dryRun: true})
   expect(spyLog).toHaveBeenNthCalledWith(1, '----- POEditorServiceProvider pull dryRun mode -----')
   expect(spyLog).toHaveBeenNthCalledWith(2, `fetch locales`)

@@ -1,3 +1,5 @@
+import { Locale } from 'vue-i18n-locale-message'
+
 /**
  *  POEditor Provider configuration for vue-i18n-locale-message CLI --conf option
  *  e.g.
@@ -24,6 +26,10 @@ export type POEditorProviderConfiguration = {
    *  if it's omitted, internally set 30 sec as default.
    */
   interval?: number
+  /**
+   *  Normalize locale messages file indend, default indent 2 space
+   */
+  indent?: number
 }
 
 export type POEditorLocaleMessage = {
@@ -33,4 +39,9 @@ export type POEditorLocaleMessage = {
   term_plural: string
   reference: string
   comment: string
+}
+
+export type UploadFileInfo = {
+  locale: Locale
+  path: string
 }
