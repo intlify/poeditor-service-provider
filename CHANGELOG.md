@@ -1,4 +1,13 @@
 
+## v0.4.0 (2019-12-26)
+
+#### :star: Features
+* [#27](https://github.com/kazupon/poeditor-service-provider/pull/27) locale messages normalization feature ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.3.0 (2019-12-24)
 
 #### :star: Features
