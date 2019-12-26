@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import qs from 'querystring'
+import qs, { ParsedUrlQueryInput } from 'querystring'
 import FormData from 'form-data'
 import axios from 'axios'
 
@@ -15,8 +15,9 @@ import { POEditorProviderConfiguration, POEditorLocaleMessage } from '../types'
 const POEDITOR_API_BASE_URL = 'https://api.poeditor.com/v2'
 
 export async function getLocales (config: POEditorProviderConfiguration) {
-  return new Promise<Locale[]>(resolve => {
-    const data = {
+  return new Promise<Locale[]>((resolve, reject) => {
+    if (!config.token) { return reject(new Error('invalid `config.token` param')) }
+    const data: ParsedUrlQueryInput = {
       api_token: config.token,
       id: config.id
     }
@@ -41,8 +42,9 @@ export async function exportLocaleMessage (config: POEditorProviderConfiguration
     })
   }
 
-  return new Promise<POEditorLocaleMessage[]>(resolve => {
-    const data = {
+  return new Promise<POEditorLocaleMessage[]>((resolve, reject) => {
+    if (!config.token) { return reject(new Error('invalid `config.token` param')) }
+    const data: ParsedUrlQueryInput = {
       api_token: config.token,
       id: config.id,
       language: locale,

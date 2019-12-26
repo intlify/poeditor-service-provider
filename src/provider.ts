@@ -1,4 +1,5 @@
-import { delay } from './utils'
+import { unflatten } from 'flat'
+import { delay, getUploadFiles } from './utils'
 import {
   Locale,
   Provider,
@@ -15,22 +16,30 @@ const debug = Debug('poeditor-service-provider:provider')
 
 const POEDITOR_API_INTERVAL_LIMITATION = 30
 
-export default function provider (id: string, token: string, pushMode: ProviderPushMode, interval: number): Provider {
+export default function provider (id: string, token: string, pushMode: ProviderPushMode, interval: number, indent: number): Provider {
   /**
    *  push
    */
   const push = async (args: PushArguments): Promise<void> => {
-    const { resource, dryRun } = args
+    const { resource, dryRun, normalize } = args
+
     return new Promise(async (resolve, reject) => {
       try {
         debug('provider#push:', resource, dryRun)
         debug(`push mode: config.pushMode=${pushMode}, resouroce.mode=${resource.mode}`)
+
         if (resource.mode !== pushMode && pushMode !== 'file-path') {
-          throw new Error('invalid push mode!')
+          return reject(new Error('invalid push mode!'))
         }
+
+        if (normalize && normalize !== 'flat') {
+          return reject(new Error(`support nomalization format 'flat' only`))
+        }
+
         dryRun && console.log(`----- POEditorServiceProvider push dryRun mode -----`)
         const results = []
-        const files = resource.files || []
+        const files = await getUploadFiles(resource.files || [], indent, normalize)
+
         for (const file of files) {
           console.log(`upload '${file.path}' file with '${file.locale}' locale`)
           if (!dryRun) {
@@ -44,6 +53,7 @@ export default function provider (id: string, token: string, pushMode: ProviderP
             results.push(undefined)
           }
         }
+
         resolve()
       } catch (e) {
         reject(e)
@@ -55,10 +65,15 @@ export default function provider (id: string, token: string, pushMode: ProviderP
    *  pull
    */
   const pull = async (args: PullArguments): Promise<ProviderPullResource> => {
-    const { locales, dryRun } = args
+    const { locales, dryRun, normalize } = args
+
     return new Promise(async (resolve, reject) => {
       dryRun && console.log(`----- POEditorServiceProvider pull dryRun mode -----`)
       const resource = {} as ProviderPullResource
+
+      if (normalize && normalize !== 'hierarchy') {
+        return reject(new Error(`support nomalization format 'hierarchy' only`))
+      }
 
       const fetchLocales = async (locales: Locale[]) => {
         if (locales.length === 0) {
@@ -79,9 +94,9 @@ export default function provider (id: string, token: string, pushMode: ProviderP
             message[m.term] = m.definition || ''
             return mesasge
           }, message)
-          resource[locale] = message as LocaleMessage
+          resource[locale] = (!normalize ? message : unflatten(message)) as LocaleMessage
         }
-        debug('normalized resource', resource)
+        debug('fetch locale messages', resource)
 
         resolve(resource)
       } catch (e) {

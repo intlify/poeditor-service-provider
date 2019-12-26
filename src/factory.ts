@@ -11,13 +11,14 @@ const factory = (configration: ProviderConfiguration<POEditorProviderConfigurati
   const id = configration.provider.id
   const token = getToken(configration.provider.token)
   const interval = configration.provider.interval || 30
+  const indent = configration.provider.indent || 2
   const { pushMode } = configration
 
   if (!token) {
     throw new Error('not specified token!')
   }
 
-  return provider(id, token, pushMode, interval)
+  return provider(id, token, pushMode, interval, indent)
 }
 
 export default factory

@@ -1,0 +1,23 @@
+{
+  "App": {
+    "title": "アプリケーション",
+    "lang": "言語切り替え",
+    "items": [
+      "item1", "item2"
+    ]
+  },
+  "components": {
+    "Modal": {
+      "ok": "OK",
+      "cancel": "キャンセル"
+    }
+  },
+  "pages": {
+    "Login": {
+      "id": "ユーザーID",
+      "password": "パスワード",
+      "confirm": "パスワードの確認入力",
+      "button": "ログイン"
+    }
+  }
+}
