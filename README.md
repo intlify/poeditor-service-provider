@@ -54,6 +54,29 @@ $ vue-i18n-locale-message pull --provider=poeditor-service-provider \
     --output=./src/locales
 ```
 
+## :warning: Do you have a hierarchical locale message?
+
+POEditor will process locale messages with hierarchical structure as `context`.
+
+Therefore, we need to normalize with flat structure , and push it to POEditor.
+
+```bash
+$ vue-i18n-locale-message push --provider=poeditor-service-provider \
+    --conf ./poeditor-service-provider-conf.json \
+    --target-paths=./src/locales/*.json \
+    --nomalize=flat \
+    --filename-match=^([\\w]*)\\.json
+```
+
+And also, when pulling data from POEditor, it need to normalize from flat structure to hierarchical structure.
+
+```bash
+$ vue-i18n-locale-message pull --provider=poeditor-service-provider \
+    --conf ./poeditor-service-provider-conf.json \
+    --nomalize=hierarchy \
+    --output=./src/locales
+```
+
 ## :copyright: License
 
 [MIT](http://opensource.org/licenses/MIT)
