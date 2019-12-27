@@ -30,8 +30,7 @@ Before you use this provider, you need to configure the following:
   "provider": {
     "id": "12345", // your POEditor project id
     "token": "xxx..." // your POEditor API token
-  },
-  "pushMode": "file-path" // you must set 'file-path'!
+  }
 }
 ```
 

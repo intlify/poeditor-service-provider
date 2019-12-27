@@ -1,7 +1,6 @@
 import * as path from 'path'
 import { unflatten } from 'flat'
 import { getToken, getUploadFiles } from '../src/utils'
-import { ProviderPushFileInfo } from 'vue-i18n-locale-message'
 import en from './fixtures/nest/en.json'
 import ja from './fixtures/nest/ja.json'
 
@@ -45,42 +44,47 @@ test('getToken: return param token', () => {
 })
 
 test('getUploadFiles: no normalization', async () => {
-  const files = [{
-    locale: 'en',
-    path: '/path/to/src/locales/en.json'
-  }, {
-    locale: 'ja',
-    path: '/path/to/src/locales/ja.json'
-  }] as ProviderPushFileInfo[]
-
-  const uploadFiles = await getUploadFiles(files, 2)
-  expect(uploadFiles).toEqual(expect.arrayContaining(files))
-})
-
-test('getUploadFiles: normalization', async () => {
-  const files = [{
-    locale: 'en',
-    path: '/path/to/src/locales/en.json'
-  }, {
-    locale: 'ja',
-    path: '/path/to/src/locales/ja.json'
-  }] as ProviderPushFileInfo[]
-  const readFiles = { en, ja }
+  const messages = { en, ja }
   const writeFiles = {}
 
   // mocking ...
   const mockFS = fs as jest.Mocked<typeof fs>
-  mockFS.readFile.mockImplementationOnce((p, cb) => cb(null, Buffer.from(JSON.stringify(en), 'utf-8')))
-  mockFS.readFile.mockImplementationOnce((p, cb) => cb(null, Buffer.from(JSON.stringify(ja), 'utf-8')))
   mockFS.writeFile.mockImplementation((p, data, cb) => {
     writeFiles[p as string] = data
     cb(null)
   })
 
+  // run 
+  const uploadFiles = await getUploadFiles(messages, 2, false)
 
-  const uploadFiles = await getUploadFiles(files, 2, 'flat')
+  // verify
   uploadFiles.forEach(file => {
-    const orgData = readFiles[file.locale]
+    const orgData = messages[file.locale]
+    const savedDate = JSON.parse(writeFiles[file.path])
+    expect(orgData).toMatchObject(savedDate)
+  })
+})
+
+test('getUploadFiles: normalization', async () => {
+  const messages = { en, ja }
+  const writeFiles = {}
+
+  // mocking ...
+  const mockFS = fs as jest.Mocked<typeof fs>
+  mockFS.writeFile.mockImplementation((p, data, cb) => {
+    writeFiles[p as string] = data
+    cb(null)
+  })
+  mockFS.readFile.mockImplementationOnce((p, cb) => cb(null, Buffer.from(JSON.stringify(en), 'utf-8')))
+  mockFS.readFile.mockImplementationOnce((p, cb) => cb(null, Buffer.from(JSON.stringify(ja), 'utf-8')))
+
+
+  // run
+  const uploadFiles = await getUploadFiles(messages, 2, false, 'flat')
+
+  // verify
+  uploadFiles.forEach(file => {
+    const orgData = messages[file.locale]
     const normalizeData = unflatten(JSON.parse(writeFiles[file.path]))
     expect(orgData).toMatchObject(normalizeData)
   })
