@@ -5781,10 +5781,10 @@ vue-eslint-parser@^5.0.0:
     esquery "^1.0.1"
     lodash "^4.17.11"
 
-vue-i18n-locale-message@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/vue-i18n-locale-message/-/vue-i18n-locale-message-0.8.0.tgz#8d7cf22b6d2717b11f648a1a8c9ec73a43cfecdd"
-  integrity sha512-WbICSJs8qOYjUwdaB8vFHcY6iVltREFDG5T7HMZNmZ+cOlRAvjII1aUdARj/KETcdReFVXkNT6sIZUeIHGtaZQ==
+vue-i18n-locale-message@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/vue-i18n-locale-message/-/vue-i18n-locale-message-0.9.0.tgz#5ea0310ca214e312b719f577ae1bc9971f18b51c"
+  integrity sha512-+7GtoYusHCj/QmxK/w/KOu2F1qT01NKhjdkTxDksaudxdXjEowtP77vsumtVRUWA8Mq66UnCQs3TIokZfVCWpA==
   dependencies:
     "@vue/component-compiler-utils" "^3.0.0"
     debug "^4.1.1"
