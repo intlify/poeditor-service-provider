@@ -36,13 +36,12 @@ test('basic', () => {
       id: '12345',
       interval: 1,
       indent: 4
-    },
-    pushMode: 'file-path'
+    }
   }
   factory(conf)
 
   // verify
-  expect(providerMock).toHaveBeenCalledWith('12345', 'xxx', 'file-path', 1, 4)
+  expect(providerMock).toHaveBeenCalledWith('12345', 'xxx', 1, 4)
 })
 
 test('env token', () => {
@@ -56,11 +55,10 @@ test('env token', () => {
     provider: {
       token: 'xxx',
       id: '12345'
-    },
-    pushMode: 'file-path'
+    }
   }
   factory(conf)
 
   // verify
-  expect(providerMock).toHaveBeenCalledWith('12345', 'POEDITOR_API_TOKEN', 'file-path', 30, 2)
+  expect(providerMock).toHaveBeenCalledWith('12345', 'POEDITOR_API_TOKEN', 30, 2)
 })

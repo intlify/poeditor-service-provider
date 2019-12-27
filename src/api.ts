@@ -6,11 +6,8 @@ import axios from 'axios'
 import { debug as Debug } from 'debug'
 const debug = Debug('poeditor-service-provider:api')
 
-import {
-  Locale,
-  ProviderPushFileInfo
-} from 'vue-i18n-locale-message'
-import { POEditorProviderConfiguration, POEditorLocaleMessage } from '../types'
+import { Locale } from 'vue-i18n-locale-message'
+import { POEditorProviderConfiguration, POEditorLocaleMessage, UploadFileInfo } from '../types'
 
 const POEDITOR_API_BASE_URL = 'https://api.poeditor.com/v2'
 
@@ -61,7 +58,7 @@ export async function exportLocaleMessage (config: POEditorProviderConfiguration
   })
 }
 
-export async function upload (fileInfo: ProviderPushFileInfo, config: POEditorProviderConfiguration) {
+export async function upload (fileInfo: UploadFileInfo, config: POEditorProviderConfiguration) {
   return new Promise(resolve => {
     const file = fs.createReadStream(fileInfo.path)
     const data = new FormData()

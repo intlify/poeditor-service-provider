@@ -7,8 +7,7 @@ import { Locale } from 'vue-i18n-locale-message'
  *      "provider": {
  *        "token": "xxx",
  *        "id": "12345"
- *      },
- *      "pushMode": "file-path"
+ *      }
  *    }
  */
 export type POEditorProviderConfiguration = {
