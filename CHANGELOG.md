@@ -1,4 +1,13 @@
 
+## v0.5.0 (2019-12-27)
+
+#### :boom: Breaking Change
+* [#30](https://github.com/kazupon/poeditor-service-provider/pull/30) breaking: fix push mode ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.4.0 (2019-12-26)
 
 #### :star: Features
