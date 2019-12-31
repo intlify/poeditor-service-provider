@@ -47,7 +47,7 @@
     "jest-watch-typeahead": "^0.4.2",
     "lerna-changelog": "^1.0.0",
     "opener": "^1.5.1",
-    "shipjs": "0.12.1",
+    "shipjs": "0.13.1",
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.3",
     "vue-i18n-locale-message": "^0.10.0"
