@@ -1,4 +1,13 @@
 
+## v0.6.0 (2020-01-07)
+
+#### :star: Features
+* [#35](https://github.com/kazupon/poeditor-service-provider/pull/35) status feature ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.5.0 (2019-12-27)
 
 #### :boom: Breaking Change
