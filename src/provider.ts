@@ -5,10 +5,17 @@ import {
   Provider,
   PushArguments,
   PullArguments,
+  StatusArguments,
   LocaleMessage,
-  LocaleMessages
+  LocaleMessages,
+  TranslationStatus
 } from 'vue-i18n-locale-message'
-import { upload, getLocales, exportLocaleMessage } from './api'
+import {
+  upload,
+  getLocales,
+  getTranslationStatus,
+  exportLocaleMessage
+} from './api'
 
 import { debug as Debug } from 'debug'
 const debug = Debug('poeditor-service-provider:provider')
@@ -93,5 +100,18 @@ export default function provider (
     return Promise.resolve(messages)
   }
 
-  return { push, pull } as Provider
+  /**
+   *  status
+   */
+  const status = async (args: StatusArguments): Promise<TranslationStatus[]> => {
+    const { locales } = args
+    const translationStatus = await getTranslationStatus({ token, id })
+    return Promise.resolve(
+      locales.length === 0
+        ? translationStatus
+        : translationStatus.filter(st => locales.includes(st.locale))
+    )
+  }
+
+  return { push, pull, status } as Provider
 }

@@ -6,7 +6,7 @@ import axios from 'axios'
 import { debug as Debug } from 'debug'
 const debug = Debug('poeditor-service-provider:api')
 
-import { Locale } from 'vue-i18n-locale-message'
+import { Locale, TranslationStatus } from 'vue-i18n-locale-message'
 import {
   POEditorProviderConfiguration,
   POEditorLocaleMessage,
@@ -36,6 +36,11 @@ async function getLanguageList (config: POEditorProviderConfiguration) {
 export async function getLocales (config: POEditorProviderConfiguration) {
   const languages = await getLanguageList(config)
   return languages.map(lang => lang.code as Locale) as Locale[]
+}
+
+export async function getTranslationStatus (config: POEditorProviderConfiguration) {
+  const languages = await getLanguageList(config)
+  return languages.map(lang => ({ locale: lang.code, percentage: lang.percentage })) as TranslationStatus[]
 }
 
 export async function exportLocaleMessage (config: POEditorProviderConfiguration, locale: Locale, format: string) {
