@@ -15,12 +15,13 @@ export async function getLocales (config: POEditorProviderConfiguration) {
   return new Promise<Locale[]>((resolve, reject) => {
     if (!config.token) { return reject(new Error('invalid `config.token` param')) }
     const data: ParsedUrlQueryInput = {
-      api_token: config.token,
+      api_token: config.token, // eslint-disable-line
       id: config.id
     }
     const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
     axios.post(`${POEDITOR_API_BASE_URL}/languages/list`, qs.stringify(data), { headers })
       .then(res => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const locales = res.data.result.languages.map((lang: any) => lang.code as Locale) as Locale[]
         debug('fetch locales:', locales)
         resolve(locales)
@@ -42,7 +43,7 @@ export async function exportLocaleMessage (config: POEditorProviderConfiguration
   return new Promise<POEditorLocaleMessage[]>((resolve, reject) => {
     if (!config.token) { return reject(new Error('invalid `config.token` param')) }
     const data: ParsedUrlQueryInput = {
-      api_token: config.token,
+      api_token: config.token, // eslint-disable-line
       id: config.id,
       language: locale,
       type: format

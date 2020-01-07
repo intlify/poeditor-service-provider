@@ -19,57 +19,49 @@ export const delay = (sec: number) => {
 }
 
 async function saveToTmp (messages: LocaleMessages, indent: number, dryRun: boolean) {
-  return new Promise<UploadFileInfo[]>(async (resolve, reject) => {
-    const files = [] as UploadFileInfo[]
-    let dir = null
-    try {
-      dir = await tmp.dir()
-      const locales = Object.keys(messages) as Locale[]
-      for (const locale of locales) {
-        const tmpFilePath = path.resolve(dir.path, `${locale}.json`)
-        console.log(`save locale message to tmp: ${tmpFilePath}`)
-        if (!dryRun) {
-          await writeFilePromisify(tmpFilePath, JSON.stringify(messages[locale], null, indent))
-        }
-        files.push({ locale: locale, path: tmpFilePath })
+  const files = [] as UploadFileInfo[]
+  let dir = null
+  try {
+    dir = await tmp.dir()
+    const locales = Object.keys(messages) as Locale[]
+    for (const locale of locales) {
+      const tmpFilePath = path.resolve(dir.path, `${locale}.json`)
+      console.log(`save locale message to tmp: ${tmpFilePath}`)
+      if (!dryRun) {
+        await writeFilePromisify(tmpFilePath, JSON.stringify(messages[locale], null, indent))
       }
-      resolve(files)
-    } catch (e) {
-      reject(e)
-    } finally {
-      dryRun && dir?.cleanup()
+      files.push({ locale: locale, path: tmpFilePath })
     }
-  })
+    return Promise.resolve(files)
+  } finally {
+    dryRun && dir?.cleanup()
+  }
 }
 
 export async function getUploadFiles (messages: LocaleMessages, indent: number, dryRun: boolean, normalize?: string) {
-  return new Promise<UploadFileInfo[]>(async (resolve, reject) => {
-    let dir = null
-    try {
-      const files = await saveToTmp(messages, indent, dryRun)
-      if (!normalize) {
-        return resolve(files)
-      } else {
-        dir = await tmp.dir()
-        const normalizedFiles = [] as UploadFileInfo[]
-        for (const file of files) {
-          const orgData = await readFilePromisify(file.path)
-          const orgJSON = JSON.parse(orgData.toString())
-          const frattedJSON = flatten(orgJSON)
-          const parsedOrgFile = path.parse(file.path)
-          const tmpFilePath = path.resolve(dir.path, parsedOrgFile.base)
-          console.log(`normalize locale messages: ${file.path} -> ${tmpFilePath}`)
-          if (!dryRun) {
-            await writeFilePromisify(tmpFilePath, JSON.stringify(frattedJSON, null, indent))
-          }
-          normalizedFiles.push({ locale: file.locale, path: tmpFilePath })
+  let dir = null
+  try {
+    const files = await saveToTmp(messages, indent, dryRun)
+    if (!normalize) {
+      return Promise.resolve(files)
+    } else {
+      dir = await tmp.dir()
+      const normalizedFiles = [] as UploadFileInfo[]
+      for (const file of files) {
+        const orgData = await readFilePromisify(file.path)
+        const orgJSON = JSON.parse(orgData.toString())
+        const frattedJSON = flatten(orgJSON)
+        const parsedOrgFile = path.parse(file.path)
+        const tmpFilePath = path.resolve(dir.path, parsedOrgFile.base)
+        console.log(`normalize locale messages: ${file.path} -> ${tmpFilePath}`)
+        if (!dryRun) {
+          await writeFilePromisify(tmpFilePath, JSON.stringify(frattedJSON, null, indent))
         }
-        resolve(normalizedFiles)
+        normalizedFiles.push({ locale: file.locale, path: tmpFilePath })
       }
-    } catch (e) {
-      reject(e)
-    } finally {
-      dryRun && dir?.cleanup()
+      return Promise.resolve(normalizedFiles)
     }
-  })
+  } finally {
+    dryRun && dir?.cleanup()
+  }
 }
