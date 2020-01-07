@@ -4,7 +4,12 @@ import * as path from 'path'
 // mocks
 jest.mock('axios')
 import axios from 'axios'
-import { getLocales, exportLocaleMessage, upload } from '../src/api'
+import {
+  getLocales,
+  getTranslationStatus,
+  exportLocaleMessage,
+  upload
+} from '../src/api'
 
 // --------------------
 // setup/teadown hooks
@@ -27,9 +32,11 @@ test('getLocales', async () => {
   const axiosMock = axios as jest.Mocked<typeof axios>
   axiosMock.post.mockImplementationOnce((url, data, config) => Promise.resolve({
     data: {result: { languages: [{
-      code: 'en'
+      code: 'en',
+      percentage: 1000.00
     }, {
-      code: 'ja'
+      code: 'ja',
+      percentage: 724.00
     }]}}
   }))
   
@@ -38,6 +45,32 @@ test('getLocales', async () => {
 
   // verify
   expect(locales).toEqual(['en', 'ja'])
+})
+
+test('getTranslationStatus', async () => {
+  // mocking ...
+  const axiosMock = axios as jest.Mocked<typeof axios>
+  axiosMock.post.mockImplementationOnce((url, data, config) => Promise.resolve({
+    data: {result: { languages: [{
+      code: 'en',
+      percentage: 1000.00
+    }, {
+      code: 'ja',
+      percentage: 724.00
+    }]}}
+  }))
+  
+  // run
+  const status = await getTranslationStatus({ token: 'xxx', id: '12345' })
+
+  // verify
+  expect(status).toEqual([{
+    locale: 'en',
+    percentage: 1000.00
+  }, {
+    locale: 'ja',
+    percentage: 724.00
+  }])
 })
 
 test('exportLocaleMessage', async () => {

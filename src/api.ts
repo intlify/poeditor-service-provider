@@ -6,26 +6,41 @@ import axios from 'axios'
 import { debug as Debug } from 'debug'
 const debug = Debug('poeditor-service-provider:api')
 
-import { Locale } from 'vue-i18n-locale-message'
-import { POEditorProviderConfiguration, POEditorLocaleMessage, UploadFileInfo } from '../types'
+import { Locale, TranslationStatus } from 'vue-i18n-locale-message'
+import {
+  POEditorProviderConfiguration,
+  POEditorLocaleMessage,
+  POEditorLanguage,
+  UploadFileInfo
+} from '../types'
 
 const POEDITOR_API_BASE_URL = 'https://api.poeditor.com/v2'
 
-export async function getLocales (config: POEditorProviderConfiguration) {
-  return new Promise<Locale[]>((resolve, reject) => {
+async function getLanguageList (config: POEditorProviderConfiguration) {
+  return new Promise<POEditorLanguage[]>((resolve, reject) => {
     if (!config.token) { return reject(new Error('invalid `config.token` param')) }
     const data: ParsedUrlQueryInput = {
-      api_token: config.token,
+      api_token: config.token, // eslint-disable-line
       id: config.id
     }
     const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
     axios.post(`${POEDITOR_API_BASE_URL}/languages/list`, qs.stringify(data), { headers })
       .then(res => {
-        const locales = res.data.result.languages.map((lang: any) => lang.code as Locale) as Locale[]
-        debug('fetch locales:', locales)
-        resolve(locales)
+        const languages = res.data.result.languages as POEditorLanguage[]
+        debug('fetch languages:', languages)
+        resolve(languages)
       })
   })
+}
+
+export async function getLocales (config: POEditorProviderConfiguration) {
+  const languages = await getLanguageList(config)
+  return languages.map(lang => lang.code as Locale) as Locale[]
+}
+
+export async function getTranslationStatus (config: POEditorProviderConfiguration) {
+  const languages = await getLanguageList(config)
+  return languages.map(lang => ({ locale: lang.code, percentage: lang.percentage })) as TranslationStatus[]
 }
 
 export async function exportLocaleMessage (config: POEditorProviderConfiguration, locale: Locale, format: string) {
@@ -42,7 +57,7 @@ export async function exportLocaleMessage (config: POEditorProviderConfiguration
   return new Promise<POEditorLocaleMessage[]>((resolve, reject) => {
     if (!config.token) { return reject(new Error('invalid `config.token` param')) }
     const data: ParsedUrlQueryInput = {
-      api_token: config.token,
+      api_token: config.token, // eslint-disable-line
       id: config.id,
       language: locale,
       type: format

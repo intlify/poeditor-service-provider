@@ -75,8 +75,10 @@ test('pull method', async () => {
   }]))
 
   // run
-  const p = provider('12345', 'xxx',  1, 2)
+  const p = provider('12345', 'xxx', 1, 2)
   const resource = await p.pull({ locales: ['en', 'ja'], dryRun: false })
+
+  // verify
   expect(spyLog).toHaveBeenNthCalledWith(1, `fetch 'en' locale messages`)
   expect(spyLog).toHaveBeenNthCalledWith(2, `fetch 'ja' locale messages`)
   expect(resource).toMatchObject({
@@ -109,6 +111,8 @@ test('pull method: not specify locales', async () => {
   // run
   const p = provider('12345', 'xxx', 'file-path', 1 ,2)
   const resource = await p.pull({ locales: [], dryRun: true})
+
+  // verify
   expect(spyLog).toHaveBeenNthCalledWith(1, '----- POEditorServiceProvider pull dryRun mode -----')
   expect(spyLog).toHaveBeenNthCalledWith(2, `fetch locales`)
   expect(spyLog).toHaveBeenNthCalledWith(3, `fetch 'en' locale messages`)
@@ -117,4 +121,51 @@ test('pull method: not specify locales', async () => {
     en: { hello: 'hello' },
     ja: { hello: 'こんにちわわわ！' }
   })
+})
+
+test('status method', async () => {
+  // mocking ...
+  const apiMock = api as jest.Mocked<typeof api>
+  apiMock.getTranslationStatus.mockImplementationOnce(({ token, id }) => Promise.resolve([{
+    locale: 'en',
+    percentage: 100
+  }, {
+    locale: 'ja',
+    percentage: 72
+  }]))
+
+  // run
+  const p = provider('12345', 'xxx', 1, 2)
+  const resource = await p.status({ locales: [] })
+
+  // verify
+  expect(resource).toMatchObject([{
+    locale: 'en',
+    percentage: 100
+  }, {
+    locale: 'ja',
+    percentage: 72
+  }])
+})
+
+test('status method: specified locals', async () => {
+  // mocking ...
+  const apiMock = api as jest.Mocked<typeof api>
+  apiMock.getTranslationStatus.mockImplementationOnce(({ token, id }) => Promise.resolve([{
+    locale: 'en',
+    percentage: 100
+  }, {
+    locale: 'ja',
+    percentage: 72
+  }]))
+
+  // run
+  const p = provider('12345', 'xxx', 1, 2)
+  const resource = await p.status({ locales: ['ja'] })
+
+  // verify
+  expect(resource).toMatchObject([{
+    locale: 'ja',
+    percentage: 72
+  }])
 })
