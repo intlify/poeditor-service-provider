@@ -27,9 +27,11 @@ test('getLocales', async () => {
   const axiosMock = axios as jest.Mocked<typeof axios>
   axiosMock.post.mockImplementationOnce((url, data, config) => Promise.resolve({
     data: {result: { languages: [{
-      code: 'en'
+      code: 'en',
+      percentage: 1000.00
     }, {
-      code: 'ja'
+      code: 'ja',
+      percentage: 724.00
     }]}}
   }))
   

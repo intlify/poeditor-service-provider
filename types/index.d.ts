@@ -40,6 +40,13 @@ export type POEditorLocaleMessage = {
   comment: string
 }
 
+export type POEditorLanguage = {
+  name: string
+  code: string
+  translations: number
+  percentage: number
+}
+
 export type UploadFileInfo = {
   locale: Locale
   path: string
