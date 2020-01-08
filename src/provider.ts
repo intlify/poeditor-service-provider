@@ -65,7 +65,7 @@ export default function provider (
    *  pull
    */
   const pull = async (args: PullArguments): Promise<LocaleMessages> => {
-    const { locales, dryRun, normalize } = args
+    const { locales, dryRun, normalize, format } = args
 
     dryRun && console.log(`----- POEditorServiceProvider pull dryRun mode -----`)
     const messages = {} as LocaleMessages
@@ -88,7 +88,7 @@ export default function provider (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let message = {} as any // TODO: should be refactored LocaleMessage type definition
       console.log(`fetch '${locale}' locale messages`)
-      const poeditorLocaleMessages = await exportLocaleMessage({ token, id }, locale, 'json')
+      const poeditorLocaleMessages = await exportLocaleMessage({ token, id }, locale, format)
       message = poeditorLocaleMessages.reduce((mesasge, m) => {
         message[m.term] = m.definition || ''
         return mesasge
