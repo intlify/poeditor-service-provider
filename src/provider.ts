@@ -7,6 +7,8 @@ import {
   PullArguments,
   StatusArguments,
   ImportArguments,
+  ExportArguments,
+  RawLocaleMessage,
   LocaleMessage,
   LocaleMessages,
   TranslationStatus
@@ -15,6 +17,7 @@ import {
   upload,
   getLocales,
   getTranslationStatus,
+  exportRawLocaleMessage,
   exportLocaleMessage
 } from './api'
 
@@ -113,7 +116,7 @@ export default function provider (
   }
 
   /**
-   * import
+   *  import
    */
   const _import = async (args: ImportArguments): Promise<void> => {
     const { messages, dryRun } = args
@@ -139,5 +142,34 @@ export default function provider (
     return Promise.resolve()
   }
 
-  return { push, pull, status, import: _import } as Provider
+  /**
+   *  export
+   */
+  const _export = async (args: ExportArguments): Promise<RawLocaleMessage[]> => {
+    const { locales, dryRun, format } = args
+
+    dryRun && console.log(`----- POEditorServiceProvider export dryRun mode -----`)
+    const messages = [] as RawLocaleMessage[]
+
+    const fetchLocales = async (locales: Locale[]) => {
+      if (locales.length === 0) {
+        console.log('fetch locales')
+        return await getLocales({ token, id })
+      } else {
+        return Promise.resolve(locales)
+      }
+    }
+
+    const targetLocales = await fetchLocales(locales)
+    for (const locale of targetLocales) {
+      console.log(`fetch '${locale}' raw locale messages`)
+      const message = await exportRawLocaleMessage({ token, id }, locale, format)
+      messages.push(message)
+    }
+    debug('raw locale messages', messages)
+
+    return Promise.resolve(messages)
+  }
+
+  return { push, pull, status, import: _import, export: _export } as Provider
 }

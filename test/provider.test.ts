@@ -98,7 +98,7 @@ test('pull method', async () => {
 test('pull method: not specify locales', async () => {
   // mocking ...
   const apiMock = api as jest.Mocked<typeof api>
-  apiMock.getLocales.mockImplementation(({ token, id }) => Promise.resolve(['en', 'ja']))
+  apiMock.getLocales.mockImplementationOnce(({ token, id }) => Promise.resolve(['en', 'ja']))
   apiMock.exportLocaleMessage.mockImplementationOnce(({ token, id }, locale, format) => Promise.resolve([{
     term: 'hello',
     definition: 'hello',
@@ -134,7 +134,7 @@ test('pull method: not specify locales', async () => {
 test('status method', async () => {
   // mocking ...
   const apiMock = api as jest.Mocked<typeof api>
-  apiMock.getTranslationStatus.mockImplementationOnce(({ token, id }) => Promise.resolve([{
+  apiMock.getTranslationStatus.mockImplementation(({ token, id }) => Promise.resolve([{
     locale: 'en',
     percentage: 100
   }, {
@@ -159,7 +159,7 @@ test('status method', async () => {
 test('status method: specified locals', async () => {
   // mocking ...
   const apiMock = api as jest.Mocked<typeof api>
-  apiMock.getTranslationStatus.mockImplementationOnce(({ token, id }) => Promise.resolve([{
+  apiMock.getTranslationStatus.mockImplementation(({ token, id }) => Promise.resolve([{
     locale: 'en',
     percentage: 100
   }, {
@@ -204,4 +204,28 @@ test('import method', async () => {
   // verify
   expect(apiMock.upload).toHaveBeenCalledWith({ locale: 'en', path: '/path/en.json' }, { id: '12345', token: 'xxx' })
   expect(apiMock.upload).toHaveBeenCalledWith({ locale: 'ja', path: '/path/ja.json' }, { id: '12345', token: 'xxx' })
+})
+
+test('export method', async () => {
+  // mocking ...
+  const apiMock = api as jest.Mocked<typeof api>
+  apiMock.getLocales.mockImplementationOnce(({ token, id }) => Promise.resolve(['en']))
+  apiMock.exportRawLocaleMessage.mockImplementationOnce(({ token, id }, locale, format) => Promise.resolve({
+    locale: 'en',
+    format: 'json',
+    data: Buffer.from(JSON.stringify(en))
+  }))
+
+  // run
+  const p = provider('12345', 'xxx', 1, 2)
+  const messages = await p.export({ locales: [], format: 'json', dryRun: false })
+
+  // verify
+  expect(spyLog).toHaveBeenNthCalledWith(1, `fetch locales`)
+  expect(spyLog).toHaveBeenNthCalledWith(2, `fetch 'en' raw locale messages`)
+  expect(messages).toMatchObject([{
+    locale: 'en',
+    format: 'json',
+    data: Buffer.from(JSON.stringify(en))
+  }])
 })
