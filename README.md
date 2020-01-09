@@ -53,6 +53,40 @@ $ vue-i18n-locale-message pull --provider=poeditor-service-provider \
     --output=./src/locales
 ```
 
+### Indicate translation status from POEditor
+
+```bash
+$ vue-i18n-locale-message status --provider=poeditor-service-provider \
+  --conf=poeditor-service-provider-conf.json
+```
+
+### Diff locale messages between local and POEditor
+
+```bash
+vue-i18n-locale-message diff --provider=poeditor-service-provider \
+  --conf=poeditor-service-provider-conf.json \
+  --target-paths=./src/locales/*.json \
+  --filename-match=^([\\w]*)\\.json
+```
+
+### Import the locale messages to POEditor
+
+```bash
+$ vue-i18n-locale-message import --provider=poeditor-service-provider \
+    --conf ./poeditor-service-provider-conf.json \
+    --target=./src/locales/ja.json \
+    --format=json
+```
+
+### Export the locale messages from POEditor
+
+```bash
+$ vue-i18n-locale-message export --provider=poeditor-service-provider \
+    --conf ./poeditor-service-provider-conf.json \
+    --output=./src/locales
+```
+
+
 ## :warning: Do you have a hierarchical locale message?
 
 POEditor will process locale messages with hierarchical structure as `context`.
