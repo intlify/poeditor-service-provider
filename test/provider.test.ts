@@ -3,10 +3,18 @@ import provider from '../src/provider'
 import en from './fixtures/nest/en.json'
 import ja from './fixtures/nest/ja.json'
 
+import { RawLocaleMessage } from 'vue-i18n-locale-message'
+
 // ------
 // mocks
 jest.mock('../src/api')
 import * as api from '../src/api'
+
+jest.mock('../src/utils', () => ({
+  ...jest.requireActual('../src/utils'),
+  getUploadFilesWithRaw: jest.fn()
+}))
+import * as utils from '../src/utils'
 
 // --------------------
 // setup/teadown hooks
@@ -168,4 +176,32 @@ test('status method: specified locals', async () => {
     locale: 'ja',
     percentage: 72
   }])
+})
+
+test('import method', async () => {
+  const messages = [{
+    locale: 'en',
+    format: 'json',
+    data: Buffer.from(JSON.stringify(en))
+  }, {
+    locale: 'ja',
+    format: 'json',
+    data: Buffer.from(JSON.stringify(ja))
+  }] as RawLocaleMessage[]
+
+  // mocking ...
+  const utilsMock = utils as jest.Mocked<typeof utils>
+  utils.getUploadFilesWithRaw.mockImplementation((messages, dryRun) => {
+    return messages.map(({ locale }) => ({ locale, path: `/path/${locale}.json` }))
+  })
+  const apiMock = api as jest.Mocked<typeof api>
+  apiMock.upload.mockImplementation((file, config) => Promise.resolve({ data: {} }))
+
+  // run
+  const p = provider('12345', 'xxx', 1, 2)
+  await p.import({ messages, dryRun: false })
+
+  // verify
+  expect(apiMock.upload).toHaveBeenCalledWith({ locale: 'en', path: '/path/en.json' }, { id: '12345', token: 'xxx' })
+  expect(apiMock.upload).toHaveBeenCalledWith({ locale: 'ja', path: '/path/ja.json' }, { id: '12345', token: 'xxx' })
 })

@@ -1,8 +1,9 @@
 import * as path from 'path'
 import { unflatten } from 'flat'
-import { getToken, getUploadFiles } from '../src/utils'
+import { getToken, getUploadFiles, getUploadFilesWithRaw } from '../src/utils'
 import en from './fixtures/nest/en.json'
 import ja from './fixtures/nest/ja.json'
+import { RawLocaleMessage } from 'vue-i18n-locale-message'
 
 // ------
 // mocks
@@ -78,7 +79,6 @@ test('getUploadFiles: normalization', async () => {
   mockFS.readFile.mockImplementationOnce((p, cb) => cb(null, Buffer.from(JSON.stringify(en), 'utf-8')))
   mockFS.readFile.mockImplementationOnce((p, cb) => cb(null, Buffer.from(JSON.stringify(ja), 'utf-8')))
 
-
   // run
   const uploadFiles = await getUploadFiles(messages, 2, false, 'flat')
 
@@ -88,4 +88,31 @@ test('getUploadFiles: normalization', async () => {
     const normalizeData = unflatten(JSON.parse(writeFiles[file.path]))
     expect(orgData).toMatchObject(normalizeData)
   })
+})
+
+test('getUploadFilesWithRaw', async () => {
+  const messages = [{
+    locale: 'en',
+    format: 'json',
+    data: Buffer.from(JSON.stringify(en))
+  }, {
+    locale: 'ja',
+    format: 'json',
+    data: Buffer.from(JSON.stringify(ja))
+  }] as RawLocaleMessage[]
+  const writeFiles = {}
+
+  // mocking ...
+  const mockFS = fs as jest.Mocked<typeof fs>
+  mockFS.writeFile.mockImplementation((p, data, cb) => {
+    writeFiles[p as string] = data
+    cb(null)
+  })
+
+  // run
+  const uploadFiles = await getUploadFilesWithRaw(messages, false)
+
+  // verify
+  expect(writeFiles[uploadFiles[0].path]).toEqual(messages[0].data)
+  expect(writeFiles[uploadFiles[1].path]).toEqual(messages[1].data)
 })
