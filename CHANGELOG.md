@@ -1,4 +1,17 @@
 
+## v0.7.0 (2020-01-09)
+
+#### :star: Features
+* [#41](https://github.com/kazupon/poeditor-service-provider/pull/41) export method supporting ([@kazupon](https://github.com/kazupon))
+* [#40](https://github.com/kazupon/poeditor-service-provider/pull/40) import method feature ([@kazupon](https://github.com/kazupon))
+
+#### :zap: Improvement Features
+* [#38](https://github.com/kazupon/poeditor-service-provider/pull/38) improve pull format option ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.6.0 (2020-01-07)
 
 #### :star: Features
