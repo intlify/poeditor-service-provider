@@ -8,6 +8,7 @@ import {
   getLocales,
   getTranslationStatus,
   exportLocaleMessage,
+  exportRawLocaleMessage,
   upload
 } from '../src/api'
 
@@ -71,6 +72,30 @@ test('getTranslationStatus', async () => {
     locale: 'ja',
     percentage: 724.00
   }])
+})
+
+test('exportRawLocaleMessage', async () => {
+  // mocking ...
+  const DONWLOAD_URL = 'https://intlify.dev/data'
+  const data = {
+    term: 'hello',
+    definition: 'hello'
+  }
+  const axiosMock = axios as jest.Mocked<typeof axios>
+  axiosMock.post.mockImplementationOnce((url, data, config) => Promise.resolve({
+    data: { result: { url: DONWLOAD_URL } }
+  }))
+  axiosMock.get.mockImplementationOnce(url => Promise.resolve({ data: JSON.stringify(data) }))
+
+  const messages = await exportRawLocaleMessage({ token: 'xxx', id: '12345' }, 'en', 'json')
+
+  expect(messages).toEqual({
+    locale: 'en',
+    format: 'json',
+    data: Buffer.from(JSON.stringify(data))
+  })
+  expect(axiosMock.get).toHaveBeenCalledTimes(1)
+  expect(axiosMock.get).toHaveBeenLastCalledWith(DONWLOAD_URL)
 })
 
 test('exportLocaleMessage', async () => {
