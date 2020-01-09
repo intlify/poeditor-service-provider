@@ -5,7 +5,7 @@ import { flatten } from 'flat'
 import tmp from 'tmp-promise'
 
 import { UploadFileInfo } from '../types'
-import { LocaleMessages, Locale } from 'vue-i18n-locale-message'
+import { LocaleMessages, Locale, RawLocaleMessage } from 'vue-i18n-locale-message'
 
 const readFilePromisify = promisify(fs.readFile)
 const writeFilePromisify = promisify(fs.writeFile)
@@ -61,6 +61,25 @@ export async function getUploadFiles (messages: LocaleMessages, indent: number, 
       }
       return Promise.resolve(normalizedFiles)
     }
+  } finally {
+    dryRun && dir?.cleanup()
+  }
+}
+
+export async function getUploadFilesWithRaw (messages: RawLocaleMessage[], dryRun: boolean) {
+  const files = [] as UploadFileInfo[]
+  let dir = null
+  try {
+    dir = await tmp.dir()
+    for (const { locale, format, data } of messages) {
+      const tmpFilePath = path.resolve(dir.path, `${locale}.${format}`)
+      console.log(`save raw locale message to tmp: ${tmpFilePath}`)
+      if (!dryRun) {
+        await writeFilePromisify(tmpFilePath, data)
+      }
+      files.push({ locale, path: tmpFilePath })
+    }
+    return Promise.resolve(files)
   } finally {
     dryRun && dir?.cleanup()
   }
