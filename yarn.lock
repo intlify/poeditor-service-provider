@@ -6295,21 +6295,22 @@ vue-eslint-parser@^5.0.0:
     esquery "^1.0.1"
     lodash "^4.17.11"
 
-vue-i18n-locale-message@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/vue-i18n-locale-message/-/vue-i18n-locale-message-0.14.0.tgz#645b7da653f7c74851912bf0ab75f9eedf82a2a4"
-  integrity sha512-+0vV9Q2nHhes8xG/p8Yt0SoeB1Zzos71LP5xwSPAlnM9EJ+xtLfAUCKWTfV3KZSzR4WEOYSozK9bUB64fn1azQ==
+vue-i18n-locale-message@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/vue-i18n-locale-message/-/vue-i18n-locale-message-0.15.0.tgz#695ca4950231fd0bd1acf2c951b638a3c81268e5"
+  integrity sha512-JkfMaKjlLgqj3cRLNNbU930RCFWP2Pr4KuO3zk/vrOy0hnRyL0yIYwoT5AW5sOe/2K8g9d2PssSoisIlkcLf+A==
   dependencies:
     "@vue/component-compiler-utils" "^3.0.0"
     debug "^4.1.1"
     deep-diff "^1.0.2"
+    deepmerge "^4.2.2"
     flat "^5.0.0"
     glob "^7.1.4"
     js-yaml "^3.13.1"
     json-diff "^0.5.4"
     json5 "^2.1.0"
     vue-template-compiler "^2.6.10"
-    yargs "^15.0.0"
+    yargs "^15.1.0"
 
 vue-template-compiler@^2.6.10:
   version "2.6.11"
@@ -6537,6 +6538,23 @@ yargs@^15.0.0:
   version "15.0.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.0.2.tgz#4248bf218ef050385c4f7e14ebdf425653d13bd3"
   integrity sha512-GH/X/hYt+x5hOat4LMnCqMd8r5Cv78heOMIJn1hr7QPPBqfeC6p89Y78+WB9yGDvfpCvgasfmWLzNzEioOUD9Q==
+  dependencies:
+    cliui "^6.0.0"
+    decamelize "^1.2.0"
+    find-up "^4.1.0"
+    get-caller-file "^2.0.1"
+    require-directory "^2.1.1"
+    require-main-filename "^2.0.0"
+    set-blocking "^2.0.0"
+    string-width "^4.2.0"
+    which-module "^2.0.0"
+    y18n "^4.0.0"
+    yargs-parser "^16.1.0"
+
+yargs@^15.1.0:
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.1.0.tgz#e111381f5830e863a89550bd4b136bb6a5f37219"
+  integrity sha512-T39FNN1b6hCW4SOIk1XyTOWxtXdcen0t+XYrysQmChzSipvhBO8Bj0nK1ozAasdk24dNWuMZvr4k24nz+8HHLg==
   dependencies:
     cliui "^6.0.0"
     decamelize "^1.2.0"
