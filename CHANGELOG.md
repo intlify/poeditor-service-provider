@@ -1,4 +1,13 @@
 
+## v0.7.1 (2020-02-05)
+
+#### :bug: Bug Fixes
+* [#53](https://github.com/kazupon/poeditor-service-provider/pull/53) fix object is converted to array ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 1
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.7.0 (2020-01-09)
 
 #### :star: Features
