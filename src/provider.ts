@@ -95,7 +95,7 @@ export default function provider (
         message[m.term] = m.definition || ''
         return mesasge
       }, message)
-      messages[locale] = (!normalize ? message : unflatten(message)) as LocaleMessage
+      messages[locale] = (!normalize ? message : unflatten(message, { object: true })) as LocaleMessage
     }
     debug('fetch locale messages', messages)
 
