@@ -29,7 +29,7 @@ Before you use this provider, you need to configure the following:
 {
   "provider": {
     "id": "12345", // your POEditor project id
-    "token": "xxx..." // your POEditor API token
+    "token": "xxx..." // your POEditor API token, if it's ommitted, use the value of `POEDITOR_API_TOKEN` ENV
   }
 }
 ```
