@@ -28,7 +28,7 @@
     "debug": "^4.1.1",
     "flat": "^5.0.0",
     "form-data": "^3.0.0",
-    "tmp-promise": "^2.0.2"
+    "tmp-promise": "^3.0.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
