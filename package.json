@@ -47,7 +47,7 @@
     "jest-watch-typeahead": "^0.6.0",
     "lerna-changelog": "^1.0.0",
     "opener": "^1.5.1",
-    "shipjs": "0.21.0",
+    "shipjs": "0.21.1",
     "ts-jest": "^26.0.0",
     "typescript": "^3.7.4",
     "typescript-eslint-language-service": "^4.0.0",
