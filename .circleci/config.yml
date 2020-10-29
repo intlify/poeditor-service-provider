@@ -29,7 +29,7 @@ aliases:
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:10.22
+    - image: circleci/node:10.23
 
 version: 2.1
 orbs:
