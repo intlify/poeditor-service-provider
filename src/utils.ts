@@ -50,12 +50,12 @@ export async function getUploadFiles (messages: LocaleMessages, indent: number, 
       for (const file of files) {
         const orgData = await readFilePromisify(file.path)
         const orgJSON = JSON.parse(orgData.toString())
-        const frattedJSON = flatten(orgJSON)
+        const flattenedJSON = flatten(orgJSON)
         const parsedOrgFile = path.parse(file.path)
         const tmpFilePath = path.resolve(dir.path, parsedOrgFile.base)
         console.log(`normalize locale messages: ${file.path} -> ${tmpFilePath}`)
         if (!dryRun) {
-          await writeFilePromisify(tmpFilePath, JSON.stringify(frattedJSON, null, indent))
+          await writeFilePromisify(tmpFilePath, JSON.stringify(flattenedJSON, null, indent))
         }
         normalizedFiles.push({ locale: file.locale, path: tmpFilePath })
       }
